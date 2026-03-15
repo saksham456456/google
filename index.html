@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searchly - Find what you're looking for</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="light-mode">
+    <header class="controls">
+        <button id="dark-mode-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+            <span class="mode-icon">🌙</span>
+        </button>
+        <button id="mute-toggle" class="icon-btn" aria-label="Toggle Sound">
+            <span class="sound-icon">🔈</span>
+        </button>
+    </header>
+
+    <main id="app-container">
+        <!-- Stage 1: Search Homepage -->
+        <section id="stage-1" class="stage active">
+            <div class="logo-container">
+                <h1 id="logo" class="searchly-logo">
+                    <span class="blue">S</span><span class="red">e</span><span class="yellow">a</span><span class="blue">r</span><span class="green">c</span><span class="red">h</span><span class="yellow">l</span><span class="green">y</span>
+                </h1>
+            </div>
+            <div class="search-container">
+                <div class="search-bar-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="main-search-input" autocomplete="off" spellcheck="false">
+                    <span class="mic-icon" title="Voice Search">🎤</span>
+                </div>
+                <div id="search-history" class="dropdown hidden">
+                    <div class="dropdown-header">Recent searches</div>
+                    <ul>
+                        <li>how to impress someone</li>
+                        <li>best pickup lines</li>
+                        <li>how to make a website</li>
+                        <li>how to stop overthinking</li>
+                    </ul>
+                </div>
+                <div id="autocomplete-suggestions" class="dropdown hidden">
+                    <ul>
+                        <li data-value="how to tell someone you like them">how to tell someone you like them</li>
+                        <li data-value="how to tell someone you like them without ruining friendship">how to tell someone you like them without ruining friendship</li>
+                        <li data-value="how to tell someone you like them over text">how to tell someone you like them over text</li>
+                        <li data-value="how to tell YOU I like you" class="highlight-suggestion">how to tell <strong>YOU</strong> I like you</li>
+                    </ul>
+                </div>
+                <div class="button-group">
+                    <button id="search-btn">Searchly Search</button>
+                    <button id="feeling-curious-btn">I'm Feeling Curious</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 2: Search Results -->
+        <section id="stage-2" class="stage hidden">
+            <div class="results-header">
+                <div class="results-top-row">
+                    <h2 class="small-logo">Searchly</h2>
+                    <div class="search-bar-wrapper small">
+                        <input type="text" value="how to tell YOU I like you" readonly>
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+                <nav class="results-tabs">
+                    <div class="tab active">All</div>
+                    <div class="tab">Images</div>
+                    <div class="tab">Videos</div>
+                    <div class="tab">News</div>
+                </nav>
+            </div>
+            <div class="results-container">
+                <div class="result-item">
+                    <a href="#" class="result-title">How to tell someone you like them</a>
+                    <p class="result-snippet">
+                        Step 1: Be honest<br>
+                        Step 2: Be brave<br>
+                        Step 3: Send them this website
+                    </p>
+                </div>
+                <div class="result-item">
+                    <a href="#" class="result-title">Signs someone secretly likes you</a>
+                    <ul class="bullet-list">
+                        <li>✔ They think about you often</li>
+                        <li>✔ They make things for you</li>
+                        <li>✔ They risk embarrassment to make you smile</li>
+                    </ul>
+                </div>
+                <div class="result-item">
+                    <a href="#" class="result-title">Compatibility Test</a>
+                    <p class="result-snippet">Wondering if you two are a match? Our advanced AI scanner can help.</p>
+                    <button id="run-test-btn" class="action-btn">Run Compatibility Test</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 3: Compatibility Test -->
+        <section id="stage-3" class="stage hidden">
+            <div class="compatibility-container">
+                <h2>AI Compatibility Scanner</h2>
+                <div id="test-form">
+                    <div class="input-field">
+                        <label for="your-name">Your Name</label>
+                        <input type="text" id="your-name" placeholder="Enter your name">
+                    </div>
+                    <div class="input-field">
+                        <label for="their-name">Their Name</label>
+                        <input type="text" id="their-name" placeholder="Enter their name">
+                    </div>
+                    <div class="input-field">
+                        <label for="fav-food">Favorite Food</label>
+                        <input type="text" id="fav-food" placeholder="Pizza? Tacos?">
+                    </div>
+                    <div class="input-field">
+                        <label for="fav-color">Favorite Color</label>
+                        <input type="text" id="fav-color" placeholder="Blue? Red?">
+                    </div>
+                    <button id="analyze-btn" class="action-btn">Analyze Compatibility</button>
+                </div>
+
+                <div id="analysis-progress" class="hidden">
+                    <p id="progress-text">Analyzing personality...</p>
+                    <div class="progress-bar-container">
+                        <div id="progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <div id="analysis-result" class="hidden">
+                    <div class="score-container">
+                        <span class="score-label">Compatibility Score:</span>
+                        <span class="score-value">99.9%</span>
+                    </div>
+                    <p class="explanation">Extremely high compatibility detected.</p>
+                    <p id="reveal-reason" class="hidden reason">Because one of them already likes the other.</p>
+                    <button id="view-analysis-btn" class="action-btn hidden">View Detailed Analysis</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 4: People Also Ask -->
+        <section id="stage-4" class="stage hidden">
+            <div class="faq-container">
+                <h3>People also ask</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">Why was this website created? <span class="arrow">▼</span></button>
+                        <div class="accordion-content">
+                            <p>Because someone wanted to tell you something.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">Is this a confession? <span class="arrow">▼</span></button>
+                        <div class="accordion-content">
+                            <p>Yes. This is definitely a confession.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">What should the user do next? <span class="arrow">▼</span></button>
+                        <div class="accordion-content">
+                            <p>Press the continue button below.</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="faq-continue-btn" class="action-btn">Continue</button>
+            </div>
+        </section>
+
+        <!-- Stage 5: Image Results -->
+        <section id="stage-5" class="stage hidden">
+            <div class="results-header">
+                <div class="results-top-row">
+                    <h2 class="small-logo">Searchly</h2>
+                    <div class="search-bar-wrapper small">
+                        <input type="text" value="how to tell YOU I like you" readonly>
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+                <nav class="results-tabs">
+                    <div class="tab">All</div>
+                    <div class="tab active">Images</div>
+                    <div class="tab">Videos</div>
+                    <div class="tab">News</div>
+                </nav>
+            </div>
+            <div class="images-grid" id="images-grid">
+                <!-- Cards will be generated by JS -->
+            </div>
+        </section>
+
+        <!-- Stage 6: AI Message Popup (Modal) -->
+        <div id="ai-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="ai-header">
+                    <span class="ai-icon">🤖</span>
+                    <h3>AI Assistant</h3>
+                </div>
+                <div class="ai-body">
+                    <p>AI analysis complete.</p>
+                    <p><strong>Final conclusion: This person likes you.</strong></p>
+                    <hr>
+                    <p>Do you like them back?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="yes-btn" class="yes-btn">YES</button>
+                    <button id="no-btn" class="no-btn">NO</button>
+                </div>
+                <div id="error-popup" class="error-toast hidden">Error: Incorrect choice detected.</div>
+            </div>
+        </div>
+
+        <!-- Stage 8: Final Confession -->
+        <section id="stage-8" class="stage hidden">
+            <div class="celebration-container">
+                <div id="confetti-canvas-container"></div>
+                <h2 class="finish-title">Search Completed</h2>
+                <p class="finish-subtitle">Result Found:</p>
+                <div class="confession-text">I Like You ❤️</div>
+                <div class="final-buttons">
+                    <button id="like-back-btn" class="action-btn">I like you too</button>
+                    <button id="meme-btn" class="action-btn secondary">Send a meme instead</button>
+                </div>
+            </div>
+            <div id="meme-overlay" class="modal-overlay hidden">
+                <div class="meme-content">
+                    <div id="random-meme-card"></div>
+                    <button id="close-meme-btn" class="action-btn">Close</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by courage and a little bit of JavaScript.</p>
+    </footer>
+
+    <!-- Audio Elements -->
+    <!-- Typing sound -->
+    <audio id="sound-typing" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/440/440-preview.mp3"></audio>
+    <!-- Click sound -->
+    <audio id="sound-click" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <!-- Error sound -->
+    <audio id="sound-error" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2534/2534-preview.mp3"></audio>
+    <!-- Celebration sound -->
+    <audio id="sound-celebration" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
